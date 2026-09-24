@@ -1,0 +1,39 @@
+import { createStart, createCsrfMiddleware, createMiddleware } from "@tanstack/react-start";
+
+import { renderErrorPage } from "./lib/error-page";
+import { attachSupabaseAuth } from "@/integrations/supabase/auth-attacher";
+import { isSupabaseConfigured } from "@/lib/supabase";
+
+// When the backend isn't connected the storefront still runs on local data, so
+// token attachment is skipped instead of failing every server-function call.
+const authMiddleware = createMiddleware({ type: "function" }).client(async ({ next }) =>
+  next(),
+);
+
+
+const errorMiddleware = createMiddleware().server(async ({ next }) => {
+  try {
+    return await next();
+  } catch (error) {
+    if (error != null && typeof error === "object" && "statusCode" in error) {
+      throw error;
+    }
+    console.error(error);
+    return new Response(renderErrorPage(), {
+      status: 500,
+      headers: { "content-type": "text/html; charset=utf-8" },
+    });
+  }
+});
+
+// Start installs this automatically when src/start.ts is absent; defining the
+// file opts out, so re-add it explicitly to keep server functions protected
+// from cross-site requests.
+const csrfMiddleware = createCsrfMiddleware({
+  filter: (ctx) => ctx.handlerType === "serverFn",
+});
+
+export const startInstance = createStart(() => ({
+  functionMiddleware: [isSupabaseConfigured ? attachSupabaseAuth : authMiddleware],
+  requestMiddleware: [errorMiddleware, csrfMiddleware],
+}));

@@ -1,0 +1,25 @@
+export { HomePage } from './HomePage';
+export { ShopPage } from './ShopPage';
+export { ProductDetailPage } from './ProductDetailPage';
+export { CartPage } from './CartPage';
+export { TryOnPage } from './TryOnPage';
+export { AssistantPage } from './AssistantPage';
+export { AccountPage } from './AccountPage';
+export { WishlistPage } from './WishlistPage';
+export { CheckoutPage } from './CheckoutPage';
+export { OrderDetailPage } from './OrderDetailPage';
+export { SearchPage } from './SearchPage';
+export { AboutPage } from './AboutPage';
+export { ContactPage } from './ContactPage';
+export { ComparePage } from './ComparePage';
+export { SignInPage } from './SignInPage';
+export { SignUpPage } from './SignUpPage';
+
+export { AdminDashboardPage } from './admin/AdminDashboardPage';
+export { AdminProductsPage } from './admin/AdminProductsPage';
+export { AdminProductFormPage } from './admin/AdminProductFormPage';
+export { AdminOrdersPage } from './admin/AdminOrdersPage';
+export { AdminOrderDetailPage } from './admin/AdminOrderDetailPage';
+export { AdminCustomersPage } from './admin/AdminCustomersPage';
+export { AdminCustomerDetailPage } from './admin/AdminCustomerDetailPage';
+export { AdminAttributesPage } from './admin/AdminAttributesPage';
